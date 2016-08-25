@@ -1,0 +1,41 @@
+.main-content, .folder-nav {
+    margin-top: 50px !important;
+}
+
+header {
+  position: fixed !important;
+  width: 100% !important;
+}
+
+.folder-nav-toggle-label {
+  margin-top: 20px !important;
+}
+
+.fix-header-nav .mobile-nav-toggle-label.fixed-nav-toggle-label {
+  visibility: hidden !important;
+}
+
+.back-to-top {
+  display: none !important;
+}
+
+a.cta_button {
+  padding-top: 21px !important;
+}
+
+a.cta_button h3 {
+  margin: 0px !important;
+}
+
+a h3 span {
+  color: white;
+  display: inline-block;
+  font-family: Roboto !important;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: bold;
+  height: 15px;
+  letter-spacing: 2px;
+  line-height: 15px;
+  /* padding-top: 21px !important; */
+}
