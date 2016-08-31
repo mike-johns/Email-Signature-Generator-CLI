@@ -23,7 +23,43 @@ class B2Upload
   end
 end
 
-# Just leaving this here for now... B2::get_upload_url
+#
+#
+# STEP ONE
+#
+# B2::authorize_account
+
+require 'json'
+require 'net/http'
+
+require_relative 'keys' # My personal account keys are stored in another file here. Just replace $account_id and $application_key below and remove this line.
+
+account_id = $account_id # Obtained from your B2 account page.
+application_key = $application_key # Obtained from your B2 account page.
+uri = URI("https://api.backblazeb2.com/b2api/v1/b2_authorize_account")
+req = Net::HTTP::Get.new(uri)
+req.basic_auth(account_id, application_key)
+http = Net::HTTP.new(req.uri.host, req.uri.port)
+http.use_ssl = true
+res = http.start {|http| http.request(req)}
+case res
+when Net::HTTPSuccess then
+    json = res.body
+when Net::HTTPRedirection then
+    fetch(res['location'], limit - 1)
+else
+    res.error!
+end
+
+# @api_url = json["apiUrl"]
+# @authentication_token = json["authorizationToken"]
+# Also need to have @bucketId previously set
+
+#
+#
+# STEP TWO
+#
+# B2::get_upload_url
 
 require 'json'
 require 'net/http'
@@ -40,36 +76,20 @@ http.use_ssl = true
 res = http.start {|http| http.request(req)}
 case res
 when Net::HTTPSuccess then
-    res.body
+    res.body # Need to manually add json =
 when Net::HTTPRedirection then
     fetch(res['location'], limit - 1)
 else
     res.error!
 end
 
-# Just leaving this here for now... B2::authorize_account
+# @upload_url = json["uploadUrl"]
 
-require 'json'
-require 'net/http'
-
-account_id = "ACCOUNT_ID" # Obtained from your B2 account page.
-application_key = "APPLICATION_KEY" # Obtained from your B2 account page.
-uri = URI("https://api.backblazeb2.com/b2api/v1/b2_authorize_account")
-req = Net::HTTP::Get.new(uri)
-req.basic_auth(account_id, application_key)
-http = Net::HTTP.new(req.uri.host, req.uri.port)
-http.use_ssl = true
-res = http.start {|http| http.request(req)}
-case res
-when Net::HTTPSuccess then
-    json = res.body
-when Net::HTTPRedirection then
-    fetch(res['location'], limit - 1)
-else
-    res.error!
-end
-
-# Just leaving this here for now... B2::upload_file
+#
+#
+# STEP THREE
+#
+# B2::upload_file
 
 require 'json'
 require 'net/http'
@@ -100,3 +120,8 @@ when Net::HTTPRedirection then
 else
     res.error!
 end
+
+# Format of final file URL:
+# https://f001.backblazeb2.com/file/cute_pictures/cats/kitten.jpg
+# ...Which is...
+# download_url/file/bucket_name/file_name
