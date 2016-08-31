@@ -2,7 +2,6 @@ require_relative 'templates'
 
 class Signature
   include Templates
-
   attr_reader :file_name
 
   def initialize(options = {})
@@ -17,6 +16,8 @@ class Signature
     @file_name
   end
 
+  private
+
   def create_file
     @file_name = "#{@first.downcase}-#{@last.downcase}-signature.html"
     @signature_file = File.open(@file_name, "w")
@@ -26,17 +27,17 @@ class Signature
     @signature_file.close
   end
 
+  def move_file_to_desktop
+    system("mv #{@file_name} ~/Desktop/")
+  end
+
   def generate_html
     if @twitter
-      @signature_file.puts Templates::generate_with_twitter
+      @signature_file.puts generate_with_twitter
     else
-      @signature_file.puts Templates::generate_without_twitter
+      @signature_file.puts generate_without_twitter
     end
     close_file
     move_file_to_desktop
-  end
-
-  def move_file_to_desktop
-    system("mv #{@file_name} ~/Desktop/")
   end
 end
