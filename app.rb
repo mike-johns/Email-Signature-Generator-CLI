@@ -11,13 +11,23 @@
 
 require_relative 'signature'
 require_relative 'b2upload'
+require_relative 'colorizr'
 
 # The command line user interface walks the user through data entry
 
-result = Signature.new first: "Mike", last: "Johns", title: "Admin"
+puts ""
+puts "Welcome!".red
+puts "Welcome!".yellow
+puts "Welcome!".green
+puts "Welcome!".light_blue
+puts "Welcome!".blue
+puts ""
+puts "Let's get you all set up with a new signature. Press RETURN to start."
+x = gets
+
 upload = B2Upload.new
 
-puts file_path.get_local_path
+# result = Signature.new first: "Mike", last: "Johns", title: "Admin", image_link: upload.returned_url
 
 #
 # puts ""
