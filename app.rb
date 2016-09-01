@@ -1,11 +1,9 @@
 # Email Signature Generator
 # Used to create HTML files for custom Thrive School staff signatures
 #
-# Core HTML is from HubSpot's free email signature generator: http://www.hubspot.com/email-signature-generator
-# They're an awesome company and you should support them.
+# HTML in templates.rb was originally generated with HubSpot's free email signature generator (http://www.hubspot.com/email-signature-generator) and has been modified.
 #
-#
-#
+# Starter code for the Backblaze B2 API in b2.rb was provided by Backblaze and has been modified.
 #
 # Copyright (c) <2016> <Mike Johns>
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
@@ -13,7 +11,7 @@
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 require_relative 'signature'
-require_relative 'b2upload'
+require_relative 'upload'
 require_relative 'colorizr'
 
 # The command line user interface walks the user through data entry
@@ -28,9 +26,9 @@ puts ""
 puts "Let's get you all set up with a new signature. Press RETURN to start."
 x = gets
 
-upload = B2Upload.new
+file = B2Upload.new
 
-# result = Signature.new first: "Mike", last: "Johns", title: "Admin", image_link: upload.returned_url
+result = Signature.new first: "Mike", last: "Johns", title: "Admin", image_link: file.download_url
 
 #
 # puts ""
