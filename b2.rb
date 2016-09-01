@@ -3,6 +3,9 @@ require 'net/http'
 require 'digest/sha1'
 require_relative 'keys' # My personal account keys are stored in another file as $account_id and $application_key. Define your own in this module or a linked file.
 
+# TODO replace as many global variables as possible with instance variables
+# TODO figure out what the hell a SHA1 checksum is
+
 module B2
   def self.authorize_account
     uri = URI("https://api.backblazeb2.com/b2api/v1/b2_authorize_account")
@@ -52,11 +55,11 @@ module B2
   end
 
   def self.upload_file
-    upload_url = "" # Provided by b2_get_upload_url
-    local_file = "" # File to be uploaded
-    upload_authorization_token = "" # Provided by b2_get_upload_url
-    file_name = "" # The name of the file you are uploading
-    content_type = ""  # The content type of the file
+    upload_url = $upload_url # Provided by b2_get_upload_url
+    local_file = $local_image_path # File to be uploaded
+    upload_authorization_token = $upload_token # Provided by b2_get_upload_url
+    file_name = $upload_file_name # The name of the file you are uploading
+    content_type = "b2/x-auto"  # The content type of the file
     sha1 = "" # SHA1 of the file you are uploading
     uri = URI(upload_url)
     req = Net::HTTP::Post.new(uri)
@@ -79,9 +82,10 @@ module B2
     end
   end
 
-  # Format of final file URL:
-  # https://f001.backblazeb2.com/file/cute_pictures/cats/kitten.jpg
-  # ...Which is...
-  # download_url/file/bucket_name/file_name
-
+  def self.store_download_url
+    # Format of final file URL:
+    # https://f001.backblazeb2.com/file/cute_pictures/cats/kitten.jpg
+    # ...Which is...
+    # download_url/file/bucket_name/file_name
+  end
 end
