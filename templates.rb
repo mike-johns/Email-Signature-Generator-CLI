@@ -1,6 +1,7 @@
 module Templates
   def generate_with_twitter
     html = <<-HEREDOC
+    <br>
     <table cellpadding="0" cellspacing="0" border="0" style="background: none; border-width: 0px; border: 0px; margin: 0; padding: 0;">
       <tr>
         <td valign="top" style="padding-top: 0; padding-bottom: 0; padding-left: 0; padding-right: 7px; border-top: 0; border-bottom: 0: border-left: 0; border-right: solid 3px #333333">
@@ -23,6 +24,7 @@ module Templates
 
   def generate_without_twitter
     html = <<-HEREDOC
+    <br>
     <table cellpadding="0" cellspacing="0" border="0" style="background: none; border-width: 0px; border: 0px; margin: 0; padding: 0;">
       <tr>
         <td valign="top" style="padding-top: 0; padding-bottom: 0; padding-left: 0; padding-right: 7px; border-top: 0; border-bottom: 0: border-left: 0; border-right: solid 3px #333333">
