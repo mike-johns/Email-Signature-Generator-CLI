@@ -1,9 +1,9 @@
-module B2
-  require 'json'
-  require 'net/http'
-  require 'digest/sha1'
-  require_relative 'keys' # My personal account keys are stored in another file as $account_id and $application_key. Define your own in this module or a linked file.
+require 'json'
+require 'net/http'
+require 'digest/sha1'
+require_relative 'keys' # My personal account keys are stored in another file as $account_id and $application_key. Define your own in this module or a linked file.
 
+module B2
   def self.authorize_account
     uri = URI("https://api.backblazeb2.com/b2api/v1/b2_authorize_account")
     req = Net::HTTP::Get.new(uri)
