@@ -14,7 +14,7 @@ require_relative 'signature'
 require_relative 'upload'
 require_relative 'colorizr'
 
-# The command line user interface walks the user through data entry
+# Begin command line user interface walks the user through data entry
 
 puts ""
 puts "Welcome!".red
