@@ -26,9 +26,9 @@ puts ""
 puts "Let's get you all set up with a new signature. Press RETURN to start."
 x = gets
 
-file = B2Upload.new
+file = Upload.new
 
-result = Signature.new first: "Mike", last: "Johns", title: "Admin", image_link: file.download_url
+# result = Signature.new first: "Mike", last: "Johns", title: "Admin", image_link: file.download_url
 
 #
 # puts ""

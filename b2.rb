@@ -31,7 +31,7 @@ module B2
   end
 
   def self.get_upload_url
-    bucket_id = "" # The ID of the bucket you want to upload your file to
+    bucket_id = $bucket_id
     uri = URI("#{$api_url}/b2api/v1/b2_get_upload_url")
     req = Net::HTTP::Post.new(uri)
     req.add_field("Authorization","#{$account_token}")
