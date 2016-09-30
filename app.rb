@@ -14,23 +14,7 @@ require_relative 'signature'
 require_relative 'upload'
 require_relative 'colorizr'
 
-# Begin command line user interface walks the user through data entry
-
-# puts ""
-# puts "Welcome!".red
-# puts "Welcome!".yellow
-# puts "Welcome!".green
-# puts "Welcome!".light_blue
-# puts "Welcome!".blue
-# puts ""
-# puts "Let's get you all set up with a new signature. Press RETURN to start."
-# x = gets
-
-# file = Upload.new
-
-# result = Signature.new first: "Mike", last: "Johns", title: "Admin", image_link: file.download_url
-
-
+# Begin command line user interface to walk the user through data entry
 puts ""
 puts "Hey there!"
 puts "I'll walk you through creating your email signature one step at a time."
@@ -42,11 +26,11 @@ first_name = gets.chomp!
 puts "Sounds good, #{first_name}. Your last name?"
 last_name = gets.chomp!
 
-puts "Great! What's your title at Thrive School?"
+puts "Great! What's your title?"
 title_entry = gets.chomp!
 
 puts "What's your phone number?"
-puts ">>> Write it out like this: 916-869-5309"
+puts ">>> Write it out like this: 916-867-5309"
 phone_entry = gets.chomp!
 
 puts "Do you have a Twitter account?"
@@ -77,22 +61,8 @@ end
 
 puts "Starting HTML creation process..."
 
+# Take user input and create new Email Signature HTML file.
 result = Signature.new first: first_name, last: last_name, title: title_entry, phone: phone_entry, twitter: twitter_entry, image_link: url_entry
 
-# puts "Done"
-# puts "There's a new file on your Desktop called #{result.file_name}"
-# puts "Here's how to add it to your Gmail:"
-# puts ">>> Press 'return' to move on to the next step"
-# puts "Step 1: Double-click the file"
-# x = gets
-# puts "Step 2: Use Command-A to 'Select All' that shows up (your awesome new signature)"
-# x = gets
-# puts "Step 3: Go to your Gmail settings"
-# x = gets
-# puts "Step 4: Paste the signature you already copied into the 'Email Signature' box"
-# x = gets
-# puts "Step 5: Hit 'Save'"
-# x = gets
-# puts "You're done! Anything sent from Gmail.com will now include your new signature."
-# puts ""
-# puts "You can now quit this application."
+puts "Done"
+puts "There's a new file on your Desktop called #{result.file_name}"

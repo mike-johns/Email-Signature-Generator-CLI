@@ -7,21 +7,13 @@ class Upload
   def initialize
     puts "Authorizing BackBlaze account..."
     B2::authorize_account
-    puts "Done"
-    puts "Saving URLs..."
     B2::store_account_urls
-    puts "Done"
     get_local_path
-    puts "Getting upload URL..."
     B2::get_upload_url
-    puts "Done"
-    puts "Saving upload URL..."
     B2::store_upload_url
-    puts $upload_url
     puts "Done"
     # B2::upload_file
     # B2::store_download_url
-    # show_user_feedback
   end
 
   def get_local_path
@@ -37,10 +29,6 @@ class Upload
   end
 
   def choose_file_type
-  end
-
-  def show_user_feedback
-    puts "\nUpload complete. Your picture is stored at: #{$download_url.green}\n\n"
   end
 
   def api_url

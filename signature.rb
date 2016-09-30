@@ -13,6 +13,8 @@ class Signature
     @image_link = options[:image_link]
     create_file
     generate_html
+    close_file
+    move_file_to_desktop
     @file_name
   end
 
@@ -37,7 +39,5 @@ class Signature
     else
       @signature_file.puts generate_without_twitter
     end
-    close_file
-    move_file_to_desktop
   end
 end
