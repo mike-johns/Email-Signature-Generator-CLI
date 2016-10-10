@@ -33,12 +33,12 @@ require_relative 'colorizr'
 # puts "(Don't include the '@'. Hit RETURN to skip)"
 # twitter_entry = gets.chomp!
 
-profile_image = Upload.new
+profile_image_url = Upload.new
 
 # NOTE Modified for testing
 
 # Take user input and create new Email Signature HTML file.
-# result = Signature.new first: "Mike", last: "Johns", title: "Systems Director", phone: "916-759-1300", twitter: "@mikejohns_", image_link: profile_image
+result = Signature.new first: "Mike", last: "Johns", title: "Systems Director", phone: "916-759-1300", twitter: "@mikejohns_", image_link: profile_image_url
 
 # puts "Done"
-# puts "There's a new file on your Desktop called #{result.file_name}"
+puts "There's a new file on your Desktop called #{result.file_name}"
