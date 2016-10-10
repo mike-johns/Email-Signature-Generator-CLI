@@ -1,9 +1,9 @@
 require 'json'
 require 'net/http'
 require 'digest/sha1'
+require 'pp'
 require_relative 'keys' # My personal account keys are stored in another file as $account_id and $application_key. Define your own in this module or a linked file.
 
-# TODO replace as many global variables as possible with instance variables
 # TODO figure out what the hell a SHA1 checksum is
 
 module B2
@@ -13,7 +13,7 @@ module B2
     req.basic_auth($account_id, $application_key)
     http = Net::HTTP.new(req.uri.host, req.uri.port)
     http.use_ssl = true
-    res = http.start {|http| http.request(req)}
+    res = http.start {|this_http| this_http.request(req)}
     case res
     when Net::HTTPSuccess then
         @json = res.body
@@ -25,20 +25,20 @@ module B2
   end
 
   def self.store_account_urls
-    $api_url = @json.match(/(?<="apiUrl": ").+(?=")/).to_s
-    $account_token = @json.match(/(?<="authorizationToken": ").+(?=")/).to_s
-    $download_url = @json.match(/(?<="downloadUrl": ").+(?=")/).to_s
+    @api_url = @json.match(/(?<="apiUrl": ").+(?=")/).to_s
+    @account_token = @json.match(/(?<="authorizationToken": ").+(?=")/).to_s
+    @download_url = @json.match(/(?<="downloadUrl": ").+(?=")/).to_s
+    puts @download_url
   end
 
   def self.get_upload_url
-    bucket_id = $bucket_id
-    uri = URI("#{$api_url}/b2api/v1/b2_get_upload_url")
+    uri = URI("#{@api_url}/b2api/v1/b2_get_upload_url")
     req = Net::HTTP::Post.new(uri)
-    req.add_field("Authorization","#{$account_token}")
-    req.body = "{\"bucketId\":\"#{bucket_id}\"}"
+    req.add_field("Authorization","#{@account_token}")
+    req.body = "{\"bucketId\":\"#{$bucket_id}\"}"
     http = Net::HTTP.new(req.uri.host, req.uri.port)
     http.use_ssl = true
-    res = http.start {|http| http.request(req)}
+    res = http.start {|this_http| this_http.request(req)}
     case res
     when Net::HTTPSuccess then
         @json = res.body
@@ -50,28 +50,24 @@ module B2
   end
 
   def self.store_upload_url
-    $upload_url = @json.match(/(?<="uploadUrl": ").+(?=")/).to_s
-    $upload_token = @json.match(/(?<="authorizationToken": ").+(?=")/).to_s
+    @upload_url = @json.match(/(?<="uploadUrl": ").+(?=")/).to_s
+    @upload_token = @json.match(/(?<="authorizationToken": ").+(?=")/).to_s
   end
 
-  def self.upload_file
-    upload_url = $upload_url # Provided by b2_get_upload_url
-    local_file = $local_image_path # File to be uploaded
-    upload_authorization_token = $upload_token # Provided by b2_get_upload_url
-    file_name = $upload_file_name # The name of the file you are uploading
-    content_type = "b2/x-auto"  # The content type of the file
-    sha1 = "" # SHA1 of the file you are uploading
-    uri = URI(upload_url)
+  def self.upload_file(local_path, sha1)
+    new_name ||= rand.to_s.slice!(2..-1)
+    content_type = "b2/x-auto"
+    uri = URI(@upload_url)
     req = Net::HTTP::Post.new(uri)
-    req.add_field("Authorization","#{upload_authorization_token}")
-    req.add_field("X-Bz-File-Name","#{file_name}")
+    req.add_field("Authorization","#{@upload_token}")
+    req.add_field("X-Bz-File-Name","#{new_name}")
     req.add_field("Content-Type","#{content_type}")
     req.add_field("X-Bz-Content-Sha1","#{sha1}")
-    req.add_field("Content-Length",File.size(local_file))
-    req.body = File.read(local_file)
+    req.add_field("Content-Length",File.size(local_path))
+    req.body = File.read(local_path)
     http = Net::HTTP.new(req.uri.host, req.uri.port)
     http.use_ssl = (req.uri.scheme == 'https')
-    res = http.start {|http| http.request(req)}
+    res = http.start {|this_http| this_http.request(req)}
     case res
     when Net::HTTPSuccess then
         @json = res.body
@@ -82,10 +78,9 @@ module B2
     end
   end
 
-  def self.store_download_url
-    # Format of final file URL:
-    # https://f001.backblazeb2.com/file/cute_pictures/cats/kitten.jpg
-    # ...Which is...
-    # download_url/file/bucket_name/file_name
+  def self.get_download_url
+    b2_file_name = @json.match(/(?<="fileName": ").+(?=")/).to_s
+    @final_url = "#{@download_url}/file/#{$bucket_name}/#{b2_file_name}"
+    @final_url
   end
 end

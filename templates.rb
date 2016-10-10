@@ -1,4 +1,5 @@
 module Templates
+  # TODO: Update with smaller sizing
   def generate_with_twitter
     html = <<-HEREDOC
     <br>
