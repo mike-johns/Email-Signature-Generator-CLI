@@ -1,15 +1,13 @@
 require 'json'
 require 'net/http'
 require 'digest/sha1'
-require 'pp'
-require_relative 'keys' # My personal account keys are stored in another file as $account_id and $application_key. Define your own in this module or a linked file.
-
-# TODO figure out what the hell a SHA1 checksum is
+require_relative 'colorizr'
+require_relative 'keys' # The following keys are stored in an external file and, since they relate to my personal account, are only referenced here: $account_id $application_key $bucket_id $bucket_name
 
 module B2
 
   def self.authorize_account
-    puts "B2 auth account begin"
+    puts "BEGIN: ".yellow + "Authorize B2 Account".blue
     uri = URI("https://api.backblazeb2.com/b2api/v1/b2_authorize_account")
     req = Net::HTTP::Get.new(uri)
     req.basic_auth($account_id, $application_key)
@@ -19,29 +17,27 @@ module B2
     case res
     when Net::HTTPSuccess then
         @json = res.body
-        puts "success"
-        pp @json
+        puts "HTTP GET Request: ".blue + "SUCCESS".green
     when Net::HTTPRedirection then
         fetch(res['location'], limit - 1)
-        puts "redirection"
+        puts "HTTP GET Request: ".blue + "REDIRECTED".yellow
     else
-        puts "error"
+        puts "HTTP GET Request: ".blue + "ERROR".red
         res.error!
     end
-    puts "B2 auth account end"
+    puts "END: ".green + "Authorize B2 Account".blue
   end
 
   def self.store_account_urls
-    puts "B2 store begin"
+    puts "BEGIN: ".yellow + "Store Account URLs".blue
     @api_url = @json.match(/(?<="apiUrl": ").+(?=")/).to_s
     @account_token = @json.match(/(?<="authorizationToken": ").+(?=")/).to_s
     @download_url = @json.match(/(?<="downloadUrl": ").+(?=")/).to_s
-    puts @download_url
-    puts "B2 store end"
+    puts "END: ".green + "Store Account URLs".blue
   end
 
   def self.get_upload_url
-    puts "B2 get upload begin"
+    puts "BEGIN: ".yellow + "Request Upload URLs".blue
     uri = URI("#{@api_url}/b2api/v1/b2_get_upload_url")
     req = Net::HTTP::Post.new(uri)
     req.add_field("Authorization","#{@account_token}")
@@ -52,27 +48,26 @@ module B2
     case res
     when Net::HTTPSuccess then
         @json = res.body
-        puts "success"
-        pp @json
+        puts "HTTP POST Request: ".blue + "SUCCESS".green
     when Net::HTTPRedirection then
         fetch(res['location'], limit - 1)
-        puts "redirection"
+        puts "HTTP POST Request: ".blue + "REDIRECTED".yellow
     else
-        puts "error"
+        puts "HTTP POST Request: ".blue + "ERROR".red
         res.error!
     end
-    puts "B2 get upload end"
+    puts "END: ".green + "Request Upload URLs".blue
   end
 
   def self.store_upload_url
-    puts "B2 store upload begin"
+    puts "BEGIN: ".yellow + "Store Upload URLs".blue
     @upload_url = @json.match(/(?<="uploadUrl": ").+(?=")/).to_s
     @upload_token = @json.match(/(?<="authorizationToken": ").+(?=")/).to_s
-    puts "B2 store upload end"
+    puts "END: ".green + "Store Upload URLs".blue
   end
 
   def self.upload_file(local_path, sha1)
-    puts "B2 upload file begin"
+    puts "BEGIN: ".yellow + "Upload File".blue
     new_name ||= rand.to_s.slice!(2..-1)
     content_type = "b2/x-auto"
     uri = URI(@upload_url)
@@ -89,19 +84,22 @@ module B2
     case res
     when Net::HTTPSuccess then
         @json = res.body
-        pp @json
+        puts "HTTP POST Request: ".blue + "SUCCESS".green
     when Net::HTTPRedirection then
         fetch(res['location'], limit - 1)
+        puts "HTTP POST Request: ".blue + "REDIRECTED".yellow
     else
+        puts "HTTP POST Request: ".blue + "ERROR".red
         res.error!
     end
-    puts "B2 upload file end"
+    puts "END: ".green + "Upload File".blue
   end
 
   def self.get_download_url
-    puts "B2 get download url begin"
+    puts "BEGIN: ".yellow + "Get Download URL Reference".blue
     b2_file_name = @json.match(/(?<="fileName": ").+(?=")/).to_s
     @final_url = "#{@download_url}/file/#{$bucket_name}/#{b2_file_name}"
-    puts "b2 get download url end"
+    puts "END: ".green + "Get Download URL Reference".blue
+    @final_url
   end
 end
