@@ -14,32 +14,38 @@ require_relative 'signature'
 require_relative 'upload'
 require_relative 'colorizr'
 
-# Begin command line user interface to walk the user through data entry
+# Begin command line user interface to walk the user through data entry.
 
-# puts "First name:"
-# first_name = gets.chomp!
-#
-# puts "Last name:"
-# last_name = gets.chomp!
-#
-# puts "Title:"
-# title_entry = gets.chomp!
-#
-# puts "Phone Number:"
-# puts "(Like This: 916-867-5309)"
-# phone_entry = gets.chomp!
-#
-# puts "Twitter Account:"
-# puts "(Don't include the '@'. Hit RETURN to skip)"
-# twitter_entry = gets.chomp!
+puts "".blue
+puts "\n\n\n\n\n\n\n\n\n\n\n\nRuby Email Signature Generator".green
+puts "\nUsing ".blue + "Backblaze B2 ".red + "Storage and ".blue + "HubSpot".yellow + "'s Starter HTML".blue
+puts "\n\nJust answer some quick questions and your awesome new HTML signature will be created for you!"
+puts "Type your response and hit " + "RETURN ".green + "to move on."
+
+puts "\n\nFirst name:"
+first_name = gets.chomp!
+
+puts "\n\nLast name:"
+last_name = gets.chomp!
+
+puts "\n\nTitle:"
+title_entry = gets.chomp!
+
+puts "\n\nPhone Number:"
+puts "(Like This: 916-867-5309)"
+phone_entry = gets.chomp!
+
+puts "\n\nTwitter Account:"
+puts "(Don't include the '@'. Hit RETURN to skip)"
+twitter_entry = gets.chomp!
+
+# Upload the user's headshot image.
 
 upload = Upload.new
 
-# NOTE Modified for testing
-
-# Take user input and create new Email Signature HTML file.
-result = Signature.new first: "Mike", last: "Johns", title: "Systems Director", phone: "916-759-1300", twitter: "@mikejohns_", image_link: upload.final_url
+# Take user input and create a new email signature HTML file.
+result = Signature.new first: first_name, last: last_name, title: title_entry, phone: phone_entry, twitter: twitter_entry, image_link: upload.final_url
 
 puts "\n\n--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--".green
-puts "#{result.file_name} is ready on your Desktop.".blue
+puts "Your new signature, " + "#{result.file_name}".green + ", is ready on your Desktop!"
 puts "--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--".green

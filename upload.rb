@@ -14,11 +14,11 @@ class Upload
     generate_hash
     B2::upload_file(@path, @hash)
     @final_url = B2::get_download_url
-    puts "Successfully uploaded image to: #{@final_url}".green
   end
 
   def get_local_path
-    puts "Drag the picture you'd like to use and drop it below, then hit RETURN."
+    puts "\n\nDrag the picture you'd like to use and drop it below, then hit " + "RETURN".green + "."
+    puts "(It should be a square .jpg or .png that's less than 500px by 500px)"
     until @path != nil
       temp_path = gets.chomp!.chop!
       if !temp_path.chars.include?(" ")
@@ -31,9 +31,9 @@ class Upload
   end
 
   def generate_hash
-    puts "Generating SHA1 Checksum".blue
+    puts "\n\nGenerating SHA1 Checksum".blue
     @hash = Digest::SHA1.file(@path)
-    puts "Successfully generated checksum: #{@hash}".green
+    puts "SUCCESS: #{@hash}".green
   end
 
   def final_url

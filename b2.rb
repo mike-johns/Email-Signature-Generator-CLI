@@ -7,7 +7,7 @@ require_relative 'keys' # The following keys are stored in an external file and,
 module B2
 
   def self.authorize_account
-    puts "Authorizing B2 Account".blue
+    puts "\n\nAuthorizing B2 Account".blue
     uri = URI("https://api.backblazeb2.com/b2api/v1/b2_authorize_account")
     req = Net::HTTP::Get.new(uri)
     req.basic_auth($account_id, $application_key)
@@ -28,14 +28,14 @@ module B2
   end
 
   def self.store_account_urls
-    "Storing Account URLs".blue
+    puts "\n\nStoring Account URLs".blue
     @api_url = @json.match(/(?<="apiUrl": ").+(?=")/).to_s
     @account_token = @json.match(/(?<="authorizationToken": ").+(?=")/).to_s
     @download_url = @json.match(/(?<="downloadUrl": ").+(?=")/).to_s
   end
 
   def self.get_upload_url
-    "Requesting Upload URLs".blue
+    puts "\n\nRequesting Upload URLs".blue
     uri = URI("#{@api_url}/b2api/v1/b2_get_upload_url")
     req = Net::HTTP::Post.new(uri)
     req.add_field("Authorization","#{@account_token}")
@@ -57,13 +57,13 @@ module B2
   end
 
   def self.store_upload_url
-    puts "Storing Upload URLs".blue
+    puts "\n\nStoring Upload URLs".blue
     @upload_url = @json.match(/(?<="uploadUrl": ").+(?=")/).to_s
     @upload_token = @json.match(/(?<="authorizationToken": ").+(?=")/).to_s
   end
 
   def self.upload_file(local_path, sha1)
-    puts "Uploading File".blue
+    puts "\n\nUploading File".blue
     new_name ||= rand.to_s.slice!(2..-1)
     content_type = "b2/x-auto"
     uri = URI(@upload_url)
@@ -91,9 +91,10 @@ module B2
   end
 
   def self.get_download_url
-    puts "Getting Final URL".blue
+    puts "\n\nGetting Final URL".blue
     b2_file_name = @json.match(/(?<="fileName": ").+(?=")/).to_s
     @final_url = "#{@download_url}/file/#{$bucket_name}/#{b2_file_name}"
+    puts "SUCCESS: #{@final_url}".green
     @final_url
   end
 end

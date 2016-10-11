@@ -5,6 +5,7 @@ class Signature
   attr_reader :file_name
 
   def initialize(options = {})
+    puts "\n\nGenerating HTML File".blue
     @first = options[:first].capitalize
     @last = options[:last].capitalize
     @title = options[:title].capitalize
@@ -15,7 +16,7 @@ class Signature
     generate_html
     close_file
     move_file_to_desktop
-    puts "Successfully generated HTML".green
+    puts "SUCCESS: #{@file_name}".green
   end
 
   private
@@ -34,7 +35,7 @@ class Signature
   end
 
   def generate_html
-    if @twitter
+    if @twitter != false
       @signature_file.puts generate_with_twitter
     else
       @signature_file.puts generate_without_twitter
