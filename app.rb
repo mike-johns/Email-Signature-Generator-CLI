@@ -40,5 +40,6 @@ upload = Upload.new
 # Take user input and create new Email Signature HTML file.
 result = Signature.new first: "Mike", last: "Johns", title: "Systems Director", phone: "916-759-1300", twitter: "@mikejohns_", image_link: upload.final_url
 
-# puts "Done"
-puts "There's a new file on your Desktop called #{result.file_name}"
+puts "\n\n--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--".green
+puts "#{result.file_name} is ready on your Desktop.".blue
+puts "--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--".green

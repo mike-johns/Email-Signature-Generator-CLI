@@ -15,7 +15,7 @@ class Signature
     generate_html
     close_file
     move_file_to_desktop
-    puts "Successfully generated HTML file: ".green + "#{@file_name}".blue
+    puts "Successfully generated HTML".green
   end
 
   private
