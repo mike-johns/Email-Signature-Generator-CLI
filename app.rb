@@ -44,6 +44,7 @@ twitter_entry = gets.chomp!
 upload = Upload.new
 
 # Take user input and create a new email signature HTML file.
+
 result = Signature.new first: first_name, last: last_name, title: title_entry, phone: phone_entry, twitter: twitter_entry, image_link: upload.final_url
 
 puts "\n\n--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--".green
