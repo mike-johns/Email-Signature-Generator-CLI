@@ -12,8 +12,8 @@ module Templates
         <td style="padding-top: 0; padding-bottom: 0; padding-left: 7px; padding-right: 0;">
           <table cellpadding="0" cellspacing="0" border="0" style="background: none; border-width: 0px; border: 0px; margin: 0; padding: 0;">
             <tr><td style="padding-bottom: 5px; color: #333333; font-size: 14px; font-family: Helvetica, sans-serif;"><strong>#{@first} #{@last}</strong></td></tr>
-            <tr><td style="padding-bottom: 5px; color: #333333; font-size: 12px; font-family: Helvetica, sans-serif;">#{@title}, <strong>Thrive School</strong></td></tr>
-            <tr><td style="padding-bottom: 2px; color: #333333; font-size: 12px; font-family: Helvetica, sans-serif; font-weight: normal;"><a href="tel:+01-#{@phone}" style="color: #F7751F; text-decoration: none;">cell</a> | <a href="mailto:#{@first.downcase}.#{@last.downcase}@thriveschool.email" style="color: #F7751F; text-decoration: none;">email</a> | <a href="https://twitter.com/#{@twitter}" style="color: #F7751F; text-decoration: none;">twitter</a> | <a href="https://app.hubspot.com/meetings/mike-johns" style="color: #F7751F; text-decoration: none;">meet</a></td></tr>
+            <tr><td style="padding-bottom: 5px; color: #333333; font-size: 12px; font-family: Helvetica, sans-serif;">#{@title}, <strong>#{@company}</strong></td></tr>
+            <tr><td style="padding-bottom: 2px; color: #333333; font-size: 12px; font-family: Helvetica, sans-serif; font-weight: normal;"><a href="tel:+01-#{@phone}" style="color: #F7751F; text-decoration: none;">cell</a> | <a href="mailto:#{@email}" style="color: #F7751F; text-decoration: none;">email</a> | <a href="https://twitter.com/#{@twitter}" style="color: #F7751F; text-decoration: none;">twitter</a></td></tr>
           </table>
         </td>
       </tr>
@@ -34,8 +34,8 @@ module Templates
         <td style="padding-top: 0; padding-bottom: 0; padding-left: 7px; padding-right: 0;">
           <table cellpadding="0" cellspacing="0" border="0" style="background: none; border-width: 0px; border: 0px; margin: 0; padding: 0;">
             <tr><td style="padding-bottom: 5px; color: #333333; font-size: 14px; font-family: Helvetica, sans-serif;"><strong>#{@first} #{@last}</strong></td></tr>
-            <tr><td style="padding-bottom: 5px; color: #333333; font-size: 12px; font-family: Helvetica, sans-serif;">#{@title}, <strong>Thrive School</strong></td></tr>
-            <tr><td style="padding-bottom: 2px; color: #333333; font-size: 12px; font-family: Helvetica, sans-serif; font-weight: normal;"><a href="tel:+01-#{@phone}" style="color: #F7751F; text-decoration: none;">cell</a> | <a href="mailto:#{@first.downcase}.#{@last.downcase}@thriveschool.email" style="color: #F7751F; text-decoration: none;">email</a> | <a href="https://app.hubspot.com/meetings/mike-johns" style="color: #F7751F; text-decoration: none;">meet</a></td></tr>
+            <tr><td style="padding-bottom: 5px; color: #333333; font-size: 12px; font-family: Helvetica, sans-serif;">#{@title}, <strong>#{@company}</strong></td></tr>
+            <tr><td style="padding-bottom: 2px; color: #333333; font-size: 12px; font-family: Helvetica, sans-serif; font-weight: normal;"><a href="tel:+01-#{@phone}" style="color: #F7751F; text-decoration: none;">cell</a> | <a href="mailto:#{@email}" style="color: #F7751F; text-decoration: none;">email</a></td></tr>
           </table>
         </td>
       </tr>

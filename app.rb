@@ -31,12 +31,19 @@ last_name = gets.chomp!
 puts "\n\nTitle:"
 title_entry = gets.chomp!
 
+puts "\n\nCompany:"
+puts "(Leave blank for Thrive School.)"
+company_entry = gets.chomp!
+
 puts "\n\nPhone Number:"
 puts "(Like This: 916-867-5309)"
 phone_entry = gets.chomp!
 
+puts "\n\nEmail Address:"
+email_entry = gets.chomp!
+
 puts "\n\nTwitter Account:"
-puts "(Don't include the '@'. Hit RETURN to skip)"
+puts "(Don't include the '@'. Leave blank if you don't want it in your signature.)"
 twitter_entry = gets.chomp!
 
 # Upload the user's headshot image.
@@ -45,7 +52,7 @@ upload = Upload.new
 
 # Take user input and create a new email signature HTML file.
 
-result = Signature.new first: first_name, last: last_name, title: title_entry, phone: phone_entry, twitter: twitter_entry, image_link: upload.final_url
+result = Signature.new first: first_name, last: last_name, title: title_entry, company: company_entry, phone: phone_entry, email: email_entry, twitter: twitter_entry, image_link: upload.final_url
 
 puts "\n\n--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--".green
 puts "Your new signature, " + "#{result.file_name}".green + ", is ready on your Desktop!"

@@ -9,7 +9,9 @@ class Signature
     @first = options[:first].capitalize
     @last = options[:last].capitalize
     @title = options[:title].capitalize
+    @company = options[:company].capitalize
     @phone = options[:phone]
+    @email = options[:email]
     @twitter = options[:twitter] ? options[:twitter].downcase : false
     @image_link = options[:image_link]
     create_file
